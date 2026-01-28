@@ -25,7 +25,7 @@ pipeline {
          sh 'ls -ltr'
          sh '''cd java-cicd-project && mvn sonar:sonar \\
               -Dsonar.host.url=http://52.55.116.131:9000 \\
-              -Dsonar.login=squ_squ_533c1b2f5d8b36529f5d07f47f58cd19be9da736'''
+              -Dsonar.login=sqa_7d054363f0248784471baf1ea132f0d987bbac6e'''
         }
     }
 
