@@ -14,7 +14,7 @@ pipeline {
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
-        sh 'cd java-cicd-project/spring-boot-app && mvn compile && mvn test'
+        sh 'cd java-cicd-project && mvn compile && mvn test'
       }
     }
 
@@ -23,7 +23,7 @@ pipeline {
     steps {
         echo 'scanning project'
         sh 'ls -ltr'
-        sh '''cd java-cicd-project/spring-boot-app && mvn sonar:sonar \\
+        sh '''cd java-cicd-project && mvn sonar:sonar \\
               -Dsonar.host.url=http://localhost:9000 \\
               -Dsonar.login=squ_3c0437cc994fbee5d77d2caf803e4a9e0ebd5775'''
     }
@@ -36,8 +36,8 @@ stage('Dependency Check') {
     steps {
         sh '''
           /opt/dependency-check/bin/dependency-check.sh \
-          --project "SpringBootApp" \
-          --scan java-cicd-project/spring-boot-app \
+          --project "java-cicd-project" \
+          --scan java-cicd-project \
           --format HTML \
           --data $WORKSPACE/odc-data \
           --out dependency-check-report
@@ -64,7 +64,7 @@ stage('Dependency Check') {
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
-        sh 'cd java-cicd-project/spring-boot-app && mvn clean package'
+        sh 'cd java-cicd-project && mvn clean package'
       }
     }
 
@@ -72,14 +72,14 @@ stage('Dependency Check') {
     steps{
         script{
             echo 'docker image build'
-  sh 'cd java-cicd-project && docker build -t shilpa/java:${BUILD_NUMBER} .'
+  sh 'cd java-cicd-project && docker build -t shilpa1819/project01:${BUILD_NUMBER} .'
         }
     }
 }
 		
      stage('docker image scan'){
      steps{
-         sh "trivy image shilpa/java:${BUILD_NUMBER}"
+         sh "trivy image shilpa1819/project01:${BUILD_NUMBER}"
      }
  }		
 
@@ -91,7 +91,7 @@ stage('Push image to Hub'){
             sh 'docker login -u dockerhub -p ${dockerhub}'
 
       }
-            sh 'docker push shilpa/java:${BUILD_NUMBER}'
+            sh 'docker push shilpa1819/project01:${BUILD_NUMBER}'
         }
     }
 }
