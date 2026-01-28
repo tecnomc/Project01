@@ -34,17 +34,21 @@ pipeline {
 
 stage('Dependency Check') {
     steps {
-        sh '''
-          /opt/dependency-check/bin/dependency-check.sh \
-          --project "java-cicd-project" \
-          --scan java-cicd-project \
-          --format HTML \
-          --data $WORKSPACE/odc-data \
-          --out dependency-check-report \
-		  --nvdApiKey $nvd-api-key
-        '''
+        withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+            sh '''
+              /opt/dependency-check/bin/dependency-check.sh \
+              --project "java-cicd-project" \
+              --scan java-cicd-project \
+              --format HTML \
+              --data $WORKSPACE/odc-data \
+              --out dependency-check-report \
+              --nvdApiKey "$NVD_API_KEY" \
+              --nvdApiDelay 2000
+            '''
+        }
     }
 }
+
 
 
     stage('Publish Report') {
