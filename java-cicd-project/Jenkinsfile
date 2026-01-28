@@ -34,7 +34,6 @@ pipeline {
 
 stage('Dependency Check') {
     steps {
-        withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
             sh '''
               /opt/dependency-check/bin/dependency-check.sh \
               --project "java-cicd-project" \
@@ -43,12 +42,10 @@ stage('Dependency Check') {
               --data $WORKSPACE/odc-data \
               --out dependency-check-report \
               --nvdApiKey "$NVD_API_KEY" \
-              --nvdApiDelay 5000
-			  --nvdValidForHours 24
             '''
         }
     }
-}
+
 
 
 
