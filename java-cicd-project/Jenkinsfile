@@ -40,7 +40,8 @@ stage('Dependency Check') {
           --scan java-cicd-project \
           --format HTML \
           --data $WORKSPACE/odc-data \
-          --out dependency-check-report
+          --out dependency-check-report \
+		  --nvdApiKey $NVD_API_KEY
         '''
     }
 }
