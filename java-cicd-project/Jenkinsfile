@@ -41,7 +41,7 @@ stage('Dependency Check') {
           --format HTML \
           --data $WORKSPACE/odc-data \
           --out dependency-check-report \
-		  --nvdApiKey $NVD_API_KEY
+		  --nvdApiKey $nvd-api-key
         '''
     }
 }
