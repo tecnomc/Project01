@@ -41,6 +41,7 @@ stage('Dependency Check') {
               --format HTML \
               --data $WORKSPACE/odc-data \
               --out dependency-check-report \
+			  --noupdate
             '''
         }
     }
