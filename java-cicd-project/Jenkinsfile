@@ -29,13 +29,14 @@ pipeline {
         }
     }
 
-stage('Security Scan - Trivy') {
+   stage('Security Scan - Trivy') {
       steps {
         sh '''
         trivy fs --exit-code 1 --severity HIGH,CRITICAL .
         '''
     }
 }
+
     stage('Building the code') {
       steps {
         sh 'ls -ltr'
