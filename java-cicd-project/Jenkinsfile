@@ -32,7 +32,7 @@ pipeline {
 
 
 
- stage('Dependency Check') {
+ #stage('Dependency Check') {
     steps {
             sh '''
               /opt/dependency-check/bin/dependency-check.sh \
@@ -49,7 +49,7 @@ pipeline {
 
 
 
-   stage('Publish Report') {
+  #stage('Publish Report') {
         steps {
             publishHTML([
                 allowMissing: false,
@@ -61,6 +61,15 @@ pipeline {
             ])
         }
     }
+
+		
+   stage('Security Scan - Trivy') {
+      steps {
+        sh '''
+        trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+        '''
+    }
+}
 
 
     stage('Building the code') {
