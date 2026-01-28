@@ -43,7 +43,7 @@ stage('Dependency Check') {
               --data $WORKSPACE/odc-data \
               --out dependency-check-report \
               --nvdApiKey "$NVD_API_KEY" \
-              --nvdApiDelay 2000
+              --nvdApiDelay 5000
             '''
         }
     }
